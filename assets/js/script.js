@@ -2,27 +2,17 @@ $(document).ready(function () {
 	var currentDate = $('#currentDay');
 	var containerEl = $('.container');
 
-	for (var i = 8; i <= 11; i++) {
+	for (var i = 8; i <= 18; i++) {
 		$('<div id="hour' + [i] + '"' + ' class="row mt-2"></div>').appendTo(
 			containerEl
 		);
-		$(
-			'<div class="d-flex align-items-center bg-light col-md-1">' +
-				[i] +
-				' AM</div>'
-		).appendTo($('#hour' + [i]));
-		$('<textarea class="col-md-10 bg-light input-text"> </textarea>').appendTo(
-			$('#hour' + [i])
-		);
-		$(
-			'<button class="btn saveBtn d-flex justify-content-center align-items-center col-md-1">' +
-				'<i class="fas fa-save"></i></button>'
-		).appendTo('#hour' + [i]);
-	}
-	for (var i = 12; i <= 18; i++) {
-		$('<div id="hour' + [i] + '"' + ' class="row mt-2"></div>').appendTo(
-			containerEl
-		);
+		if (i <= 11) {
+			$(
+				'<div class="d-flex align-items-center bg-light col-md-1">' +
+					[i] +
+					' AM</div>'
+			).appendTo($('#hour' + [i]));
+		}
 		if (i === 12) {
 			$(
 				'<div class="d-flex align-items-center bg-light col-md-1">' +
