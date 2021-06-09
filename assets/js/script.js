@@ -1,39 +1,40 @@
 $(document).ready(function () {
 	var currentDate = $('#currentDay');
 	var containerEl = $('.container');
+	var hours = {
+		am: [8, 9, 10, 11],
+		pm: [12, 13, 14, 15, 16, 17, 18],
+	};
+	var timeSymbol = '';
+	var settedTime = '';
+	var currentRowId = '';
 
 	for (var i = 8; i <= 18; i++) {
-		$('<div id="hour' + [i] + '"' + ' class="row mt-2"></div>').appendTo(
-			containerEl
-		);
-		if (i <= 11) {
-			$(
-				'<div class="d-flex align-items-center bg-light col-md-1">' +
-					[i] +
-					' AM</div>'
-			).appendTo($('#hour' + [i]));
+		timeSymbol = hours.am.includes(i) ? 'am' : 'pm';
+		settedTime = i >= 13 && i <= 18 ? i - 12 : i;
+		currentId = `hour${i}`;
+
+		getLocalStorage = localStorage.getItem('hour' + i);
+		console.log(getLocalStorage);
+
+		if (getLocalStorage === null) {
+			getLocalStorage = '';
 		}
-		if (i === 12) {
-			$(
-				'<div class="d-flex align-items-center bg-light col-md-1">' +
-					[i] +
-					' PM</div>'
-			).appendTo($('#hour' + [i]));
-		}
-		if (i >= 13 && i <= 18) {
-			$(
-				'<div class="d-flex align-items-center bg-light col-md-1">' +
-					[i - 12] +
-					' PM</div>'
-			).appendTo($('#hour' + [i]));
-		}
-		$('<textarea class="col-md-10 bg-light input-text"> </textarea>').appendTo(
-			$('#hour' + [i])
-		);
+
+		$(`<div id="${currentId}" class="row mt-2"></div>`).appendTo(containerEl);
+
+		$(
+			`<div class="d-flex align-items-center bg-light col-md-1"> ${settedTime} ${timeSymbol} </div>`
+		).appendTo($('#hour' + i));
+
+		$(
+			`<textarea class="col-md-10 bg-light input-text">${getLocalStorage}</textarea>`
+		).appendTo($('#hour' + i));
+
 		$(
 			'<button class="btn saveBtn d-flex justify-content-center align-items-center col-md-1">' +
 				'<i class="fas fa-save"></i></button>'
-		).appendTo('#hour' + [i]);
+		).appendTo('#hour' + i);
 	}
 	console.log(containerEl);
 
