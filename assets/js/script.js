@@ -14,7 +14,7 @@ $(document).ready(function () {
 		settedTime = i >= 13 && i <= 18 ? i - 12 : i;
 		currentId = `hour${i}`;
 
-		getLocalStorage = localStorage.getItem('hour' + i);
+		getLocalStorage = localStorage.getItem(currentId);
 		// console.log(getLocalStorage);
 
 		if (getLocalStorage === null) {
@@ -27,16 +27,16 @@ $(document).ready(function () {
 
 		$(
 			`<div class="d-flex align-items-center col-md-1"> ${settedTime} ${timeSymbol} </div>`
-		).appendTo($('#hour' + i));
+		).appendTo($(`#${currentId}`));
 
 		$(
 			`<textarea class="col-md-10 input-text">${getLocalStorage}</textarea>`
-		).appendTo($('#hour' + i));
+		).appendTo($(`#${currentId}`));
 
 		$(
 			'<button class="btn saveBtn d-flex justify-content-center align-items-center col-md-1">' +
 				'<i class="fas fa-save"></i></button>'
-		).appendTo('#hour' + i);
+		).appendTo(`#${currentId}`);
 	}
 	// console.log(containerEl);
 
