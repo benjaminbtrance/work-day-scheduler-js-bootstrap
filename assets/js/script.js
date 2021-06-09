@@ -15,20 +15,22 @@ $(document).ready(function () {
 		currentId = `hour${i}`;
 
 		getLocalStorage = localStorage.getItem('hour' + i);
-		console.log(getLocalStorage);
+		// console.log(getLocalStorage);
 
 		if (getLocalStorage === null) {
 			getLocalStorage = '';
 		}
 
-		$(`<div id="${currentId}" class="row mt-2"></div>`).appendTo(containerEl);
+		$(`<div id="${currentId}" class="row mt-2 time-block"></div>`).appendTo(
+			containerEl
+		);
 
 		$(
-			`<div class="d-flex align-items-center bg-light col-md-1"> ${settedTime} ${timeSymbol} </div>`
+			`<div class="d-flex align-items-center col-md-1"> ${settedTime} ${timeSymbol} </div>`
 		).appendTo($('#hour' + i));
 
 		$(
-			`<textarea class="col-md-10 bg-light input-text">${getLocalStorage}</textarea>`
+			`<textarea class="col-md-10 input-text">${getLocalStorage}</textarea>`
 		).appendTo($('#hour' + i));
 
 		$(
@@ -36,7 +38,7 @@ $(document).ready(function () {
 				'<i class="fas fa-save"></i></button>'
 		).appendTo('#hour' + i);
 	}
-	console.log(containerEl);
+	// console.log(containerEl);
 
 	// handle displaying the date and time
 	function displayTime() {
@@ -46,12 +48,40 @@ $(document).ready(function () {
 
 	setInterval(displayTime, 1000);
 
+	function hourTracker() {
+		//get current number of hours.
+		var currentHour = moment().hour();
+
+		// test to see if the if statement is working
+		// currentHour = 10;
+
+		// loop over time blocks
+		$('.time-block').each(function () {
+			var blockHour = parseInt($(this).attr('id').split('hour')[1]);
+			//console.log(blockHour, currentHour);
+
+			//check if currentHour is passed the blockHour then change the bootstrap class
+			if (blockHour < currentHour) {
+				$(this).addClass('bg-danger text-white');
+				$(this).children('.input-text').addClass('text-white');
+			} else if (blockHour === currentHour) {
+				$(this).addClass('bg-success text-white');
+				$(this).children('.input-text').addClass('text-white');
+			} else {
+				$(this).addClass('bg-light');
+			}
+		});
+	}
+
+	// call hourTracker function
+	hourTracker();
+
 	$('.saveBtn').on('click', function () {
 		var input = $(this).siblings('.input-text').val();
 		var time = $(this).parent().attr('id');
-		console.log(this);
-		console.log(input);
-		console.log(time);
+		// console.log(this);
+		// console.log(input);
+		// console.log(time);
 
 		localStorage.setItem(time, input);
 	});
